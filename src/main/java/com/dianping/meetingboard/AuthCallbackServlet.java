@@ -12,9 +12,8 @@
  * the License.
  */
 
-package com.google.api.services.samples.calendar.appengine;
+package com.dianping.meetingboard;
 
-import com.dianping.meetingboard.Utils;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * HTTP servlet to process access granted from user.
  */
-public class CalendarSampleAuthCallbackServlet
+public class AuthCallbackServlet
 		extends AbstractAuthorizationCodeCallbackServlet {
 
 	private static final long serialVersionUID = 1L;

@@ -4,21 +4,13 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-<!--   <servlet>
-    <servlet-name>CalendarSampleServlet</servlet-name>
-    <servlet-class>com.google.api.services.samples.calendar.appengine.CalendarSampleServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CalendarSampleServlet</servlet-name>
-    <url-pattern>/calendar-sampleservlet</url-pattern>
-  </servlet-mapping> -->
 
   <servlet>
-    <servlet-name>CalendarSampleAuthCallbackServlet</servlet-name>
-    <servlet-class>com.google.api.services.samples.calendar.appengine.CalendarSampleAuthCallbackServlet</servlet-class>
+    <servlet-name>AuthCallbackServlet</servlet-name>
+    <servlet-class>com.dianping.meetingboard.AuthCallbackServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CalendarSampleAuthCallbackServlet</servlet-name>
+    <servlet-name>AuthCallbackServlet</servlet-name>
     <url-pattern>/oauth2callback</url-pattern>
   </servlet-mapping>
   
@@ -41,20 +33,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </servlet-mapping>
 
   <welcome-file-list>
-    <welcome-file>calendar-sampleservlet</welcome-file>
+    <welcome-file>dianping-meetings-board</welcome-file>
   </welcome-file-list>
-
-  <!-- The following ensures the user will be logged in to a Google Account by
-    redirecting them to the sign-in page if not.
-    For more information, see https://developers.google.com/appengine/docs/java/config/webxml -->
-<!--   <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>any</web-resource-name>
-      <url-pattern>/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>*</role-name>
-    </auth-constraint>
-  </security-constraint> -->
 
 </web-app>
