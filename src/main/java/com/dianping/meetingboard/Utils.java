@@ -14,15 +14,15 @@
 
 package com.dianping.meetingboard;
 
-import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Preconditions;
 import com.google.api.client.util.store.DataStoreFactory;
+import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 
 import java.io.IOException;
@@ -38,14 +38,13 @@ public class Utils {
    * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
    * globally shared instance across your application.
    */
-  private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
-      AppEngineDataStoreFactory.getDefaultInstance();
+  private static final DataStoreFactory DATA_STORE_FACTORY = MemoryDataStoreFactory.getDefaultInstance();
 
   private static GoogleClientSecrets clientSecrets = null;
-  static final String MAIN_SERVLET_PATH = "/calendar-sampleservlet";
-  static final String AUTH_CALLBACK_SERVLET_PATH = "/oauth2callback";
-  static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
-  static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+  public static final String MAIN_SERVLET_PATH = "/rooms";
+  public static final String AUTH_CALLBACK_SERVLET_PATH = "/oauth2callback";
+  public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+  public static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
   private static GoogleClientSecrets getClientSecrets() throws IOException {
     if (clientSecrets == null) {
@@ -60,7 +59,7 @@ public class Utils {
     return clientSecrets;
   }
 
-  static GoogleAuthorizationCodeFlow initializeFlow() throws IOException {
+  public static GoogleAuthorizationCodeFlow initializeFlow() throws IOException {
     // Ask for only the permissions you need. Asking for more permissions will reduce the number of
     // users who finish the process for giving you access to their accounts. It will also increase
     // the amount of effort you will have to spend explaining to users what you are doing with their
@@ -78,7 +77,7 @@ public class Utils {
         .build();
   }
 
-  static String getRedirectUri(HttpServletRequest req) {
+  public static String getRedirectUri(HttpServletRequest req) {
     GenericUrl requestUrl = new GenericUrl(req.getRequestURL().toString());
     requestUrl.setRawPath(AUTH_CALLBACK_SERVLET_PATH);
     return requestUrl.build();

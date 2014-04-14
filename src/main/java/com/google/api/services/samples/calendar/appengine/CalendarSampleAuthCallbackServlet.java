@@ -14,11 +14,11 @@
 
 package com.google.api.services.samples.calendar.appengine;
 
+import com.dianping.meetingboard.Utils;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.appengine.auth.oauth2.AbstractAppEngineAuthorizationCodeCallbackServlet;
-import com.google.appengine.api.users.UserServiceFactory;
+import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 
 import java.io.IOException;
 
@@ -30,35 +30,42 @@ import javax.servlet.http.HttpServletResponse;
  * HTTP servlet to process access granted from user.
  */
 public class CalendarSampleAuthCallbackServlet
-    extends AbstractAppEngineAuthorizationCodeCallbackServlet {
+		extends AbstractAuthorizationCodeCallbackServlet {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Override
-  protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential)
-      throws ServletException, IOException {
-    resp.sendRedirect(Utils.MAIN_SERVLET_PATH);
-  }
+	@Override
+	protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential)
+			throws ServletException, IOException {
+		resp.sendRedirect(Utils.MAIN_SERVLET_PATH);
+	}
 
-  @Override
-  protected void onError(
-      HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse)
-      throws ServletException, IOException {
-    String nickname = UserServiceFactory.getUserService().getCurrentUser().getNickname();
-    resp.setStatus(200);
-    resp.addHeader("Content-Type", "text/html");
-    resp.getWriter().print("<h3>" + nickname + ", why don't you want to play with me?</h3>");
-    return;
-  }
+	@Override
+	protected void onError(
+			HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse)
+			throws ServletException, IOException {
+		// String nickname =
+		// UserServiceFactory.getUserService().getCurrentUser().getNickname();
+		String nickname = "erwin";
+		resp.setStatus(200);
+		resp.addHeader("Content-Type", "text/html");
+		resp.getWriter().print("<h3>" + nickname + ", why don't you want to play with me?</h3>");
+		return;
+	}
 
-  @Override
-  protected AuthorizationCodeFlow initializeFlow() throws ServletException, IOException {
-    return Utils.initializeFlow();
-  }
+	@Override
+	protected AuthorizationCodeFlow initializeFlow() throws ServletException, IOException {
+		return Utils.initializeFlow();
+	}
 
-  @Override
-  protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
-    return Utils.getRedirectUri(req);
-  }
+	@Override
+	protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
+		return Utils.getRedirectUri(req);
+	}
+
+	@Override
+	protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
+		return "11461664512130162162";
+	}
 
 }

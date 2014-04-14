@@ -5,15 +5,15 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeServlet;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.api.client.util.DateTime;
+import com.google.api.client.util.Lists;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-import com.google.appengine.repackaged.com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 public class RoomServlet extends AbstractAuthorizationCodeServlet {
 
 	private static final long serialVersionUID = 122117264722150767L;
-	static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
+	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final JsonFactory JSONFACTORY = new JsonFactory();
 	private static final String APPLICATION_NAME = "MeetingBoard";
 	
