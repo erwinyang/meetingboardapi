@@ -78,9 +78,9 @@ public class BookServlet extends AbstractAuthorizationCodeServlet {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC+8"));
+		DateTime start = new DateTime(startDate, TimeZone.getTimeZone("GMT+8"));
 		event.setStart(new EventDateTime().setDateTime(start));
-		DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC+8"));
+		DateTime end = new DateTime(endDate, TimeZone.getTimeZone("GMT+8"));
 		event.setEnd(new EventDateTime().setDateTime(end));
 
 		Calendar calendar = new Calendar.Builder(
