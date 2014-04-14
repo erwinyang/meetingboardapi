@@ -21,7 +21,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -78,9 +77,9 @@ public class BookServlet extends AbstractAuthorizationCodeServlet {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		DateTime start = new DateTime(startDate, TimeZone.getTimeZone("GMT+8"));
+		DateTime start = new DateTime(startDate);
 		event.setStart(new EventDateTime().setDateTime(start));
-		DateTime end = new DateTime(endDate, TimeZone.getTimeZone("GMT+8"));
+		DateTime end = new DateTime(endDate);
 		event.setEnd(new EventDateTime().setDateTime(end));
 
 		Calendar calendar = new Calendar.Builder(
