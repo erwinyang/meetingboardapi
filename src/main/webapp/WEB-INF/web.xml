@@ -4,14 +4,14 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <servlet>
+<!--   <servlet>
     <servlet-name>CalendarSampleServlet</servlet-name>
     <servlet-class>com.google.api.services.samples.calendar.appengine.CalendarSampleServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CalendarSampleServlet</servlet-name>
     <url-pattern>/calendar-sampleservlet</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
 
   <servlet>
     <servlet-name>CalendarSampleAuthCallbackServlet</servlet-name>
