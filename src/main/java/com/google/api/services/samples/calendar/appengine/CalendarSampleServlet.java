@@ -53,7 +53,9 @@ public class CalendarSampleServlet
       throws IOException, ServletException {
     // Get the stored credentials using the Authorization Flow
     AuthorizationCodeFlow authFlow = initializeFlow();
-    Credential credential = authFlow.loadCredential(getUserId(req));
+    String userId = getUserId(req);
+    System.out.println(userId);
+    Credential credential = authFlow.loadCredential(userId);
     System.out.println(credential.getRefreshToken());
     
     // Build the Calendar object using the credentials

@@ -42,7 +42,7 @@ public class Utils {
       AppEngineDataStoreFactory.getDefaultInstance();
 
   private static GoogleClientSecrets clientSecrets = null;
-  static final String MAIN_SERVLET_PATH = "/calendar-sampleservlet";
+  static final String MAIN_SERVLET_PATH = "/rooms";
   static final String AUTH_CALLBACK_SERVLET_PATH = "/oauth2callback";
   static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
   static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();

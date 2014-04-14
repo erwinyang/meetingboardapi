@@ -22,15 +22,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <url-pattern>/oauth2callback</url-pattern>
   </servlet-mapping>
   
-   <servlet>
-    <servlet-name>ServiceAccountServlet</servlet-name>
-    <servlet-class>com.google.api.services.samples.calendar.appengine.ServiceAccountServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServiceAccountServlet</servlet-name>
-    <url-pattern>/sa</url-pattern>
-  </servlet-mapping>
-  
   <servlet>
     <servlet-name>RoomListServlet</servlet-name>
     <servlet-class>com.dianping.meetingboard.RoomListServlet</servlet-class>
