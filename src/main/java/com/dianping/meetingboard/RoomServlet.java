@@ -13,6 +13,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Lists;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.Events;
 
 import java.io.IOException;
@@ -78,22 +79,32 @@ public class RoomServlet extends AbstractAuthorizationCodeServlet {
 				.list(id)
 				.setTimeMin(begin)
 				.setTimeMax(end)
-				.setMaxAttendees(1)
+//				.setMaxAttendees(1)
 				.execute();
-
-		gen.writeStartObject();
-
-		gen.writeStringField("name", Constants.ROOMS.get(id));
-		gen.writeFieldName("events");
-		gen.writeStartArray();
 
 		List<Event> eventList = Lists.newArrayList();
 		for (Event event : events.getItems()) {
-			if (event.getAttendees() != null
-					&& event.getAttendees().size() > 0
-					&& StringUtils.equals(event.getAttendees().get(0).getResponseStatus(), "accepted")
+			if (event.getAttendees() == null) {
+				continue;
+			}
+			
+			EventAttendee room = null;
+			for (EventAttendee attendee : event.getAttendees()) {
+				if (StringUtils.equals(attendee.getEmail(), id)) {
+					room = attendee;
+					break;
+				}
+			}
+			
+			if (room == null) {
+				continue;
+			}
+			
+			if (StringUtils.equals(room.getResponseStatus(), "accepted")
 					&& event.getStart() != null
-					&& event.getEnd() != null) {
+					&& event.getStart().getDateTime() != null
+					&& event.getEnd() != null
+					&& event.getEnd().getDateTime() != null) {
 				eventList.add(event);
 			}
 		}
@@ -101,35 +112,27 @@ public class RoomServlet extends AbstractAuthorizationCodeServlet {
 		Collections.sort(eventList, new Comparator<Event>() {
 			@Override
 			public int compare(Event a, Event b) {
-				String ta = a.getStart() == null || a.getStart().getDateTime() == null ? null : a.getStart()
-						.getDateTime().toString();
-				String tb = b.getStart() == null || b.getStart().getDateTime() == null ? null : b.getStart()
-						.getDateTime().toString();
-				if (ta == null && tb == null) {
-					return 0;
-				} else if (ta == null && tb != null) {
-					return 1;
-				} else if (ta != null && tb == null) {
-					return -1;
-				} else {
-					return ta.compareTo(tb);
-				}
+				String ta = a.getStart().getDateTime().toString();
+				String tb = b.getStart().getDateTime().toString();
+				return ta.compareTo(tb);
 			}
 		});
 
+		gen.writeStartObject();
+		gen.writeStringField("name", Constants.ROOMS.get(id));
+		gen.writeFieldName("events");
+		gen.writeStartArray();
 		for (Event event : eventList) {
 			gen.writeStartObject();
-			gen.writeStringField("title", event.getSummary() == null || event.isEmpty() ? "未命名会议" : event.getSummary());
-			gen.writeStringField("creator",
-					event.getCreator() == null || StringUtils.isEmpty(event.getCreator().getDisplayName()) ? "无名氏"
-							: event.getCreator().getDisplayName());
+			String summary = StringUtils.isEmpty(event.getSummary()) ? "未命名会议" : event.getSummary();
+			String creator = event.getCreator() == null || StringUtils.isEmpty(event.getCreator().getDisplayName()) ? "无名氏" : event.getCreator().getDisplayName();
+			gen.writeStringField("title", summary);
+			gen.writeStringField("creator", creator);
 			gen.writeStringField("start", event.getStart().getDateTime().toString());
 			gen.writeStringField("end", event.getEnd().getDateTime().toString());
 			gen.writeEndObject();
 		}
-
 		gen.writeEndArray();
-
 		gen.writeEndObject();
 		gen.close();
 		sw.close();
