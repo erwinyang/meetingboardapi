@@ -59,6 +59,7 @@ public class BookServlet extends AbstractAuthorizationCodeServlet {
 		
 	    AuthorizationCodeFlow authFlow = initializeFlow();
 	    Credential credential = authFlow.loadCredential(getUserId(req));
+	    credential.refreshToken();
 
 		Event event = new Event();
 		event.setSummary("(临时会议)");
