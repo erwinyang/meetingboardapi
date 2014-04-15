@@ -55,6 +55,7 @@ public class RoomServlet extends AbstractAuthorizationCodeServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 	    AuthorizationCodeFlow authFlow = initializeFlow();
 	    Credential credential = authFlow.loadCredential(getUserId(req));
+	    credential.refreshToken();
 
 		StringWriter sw = new StringWriter();
 		JsonGenerator gen = JSONFACTORY.createJsonGenerator(sw);
